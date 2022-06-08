@@ -69,7 +69,11 @@ class ProductScreen extends StatelessWidget {
                     'ADD TO CART',
                     style: textTheme.headline3,
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    BlocProvider.of<CartBloc>(context)
+                        .add(CartProductAdded(product));
+                    Navigator.pushNamed(context, '/cart');
+                  }),
             ],
           ),
         ),
