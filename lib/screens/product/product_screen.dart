@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce_app/blocs/blocs.dart';
 import 'package:ecommerce_app/models/models.dart';
 import 'package:ecommerce_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductScreen extends StatelessWidget {
   final Product product;
@@ -27,7 +29,7 @@ class ProductScreen extends StatelessWidget {
       appBar: CustomAppbar(title: product.name),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
-        child: Container(
+        child: SizedBox(
           height: 70,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -36,9 +38,31 @@ class ProductScreen extends StatelessWidget {
                 icon: const Icon(Icons.share, color: Colors.white),
                 onPressed: () {},
               ),
-              IconButton(
-                  icon: const Icon(Icons.favorite, color: Colors.white),
-                  onPressed: () {}),
+              BlocBuilder<WishlistBloc, WishlistState>(
+                builder: (context, state) {
+                  // if (state is WishlistLoading) {
+                  //   return const CustomCircularProgress();
+                  // }
+                  // if (state is WishlistLoaded) {
+
+                  return IconButton(
+                      icon: const Icon(Icons.favorite, color: Colors.white),
+                      onPressed: () {
+                        BlocProvider.of<WishlistBloc>(context)
+                            .add(AddWishlistProduct(product: product));
+
+                        const snackBar = SnackBar(
+                          content: Text('Added to your WishList'),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      });
+
+                  // else {
+                  //   return const CustomErrorMessage();
+                  // }
+                },
+              ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(primary: Colors.white),
                   child: Text(
