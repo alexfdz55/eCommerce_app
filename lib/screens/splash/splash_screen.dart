@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/widgets/widgets.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -14,9 +14,35 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Timer(
+      const Duration(seconds: 2),
+      () => Navigator.pushNamed(context, '/'),
+    );
     return Scaffold(
-      appBar: const CustomAppbar(title: 'Splash'),
-      bottomNavigationBar: CustomNavBar(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Center(
+            child: Image(
+              image: AssetImage('assets/images/logo.png'),
+              width: 125,
+              height: 125,
+            ),
+          ),
+          const SizedBox(height: 30),
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              'Zero to Unicorn',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline2!
+                  .copyWith(color: Colors.white),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
