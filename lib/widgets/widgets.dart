@@ -6,3 +6,4 @@ export 'product_card.dart';
 export 'product_carousel.dart';
 export 'custom_circular_progress.dart';
 export 'custom_error_message.dart';
+export 'cart_product_card.dart';
