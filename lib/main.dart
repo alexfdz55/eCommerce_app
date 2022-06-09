@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           title: 'Material App',
           theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: HomeScreen.routeName,
+          initialRoute: CheckoutScreen.routeName,
         ),
       ),
     );

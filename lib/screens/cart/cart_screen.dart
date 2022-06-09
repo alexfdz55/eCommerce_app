@@ -20,8 +20,6 @@ class CartScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: const CustomAppbar(title: 'Cart'),
       bottomNavigationBar: const CustomNavBar(screen: routeName),
@@ -81,71 +79,9 @@ class CartScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // CartProductCard(product: Product.products[0]),
-                      // CartProductCard(product: Product.products[1]),
-                      // CartProductCard(product: Product.products[3]),
                     ],
                   ),
-                  Column(
-                    children: [
-                      const Divider(thickness: 2),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 10),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('SUBTOTAL', style: textTheme.headline5),
-                                Text('\$${state.cart.subtotalString}',
-                                    style: textTheme.headline5),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('DELIVERY FEE',
-                                    style: textTheme.headline5),
-                                Text('\$${state.cart.deliveryFeeString}',
-                                    style: textTheme.headline5),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Stack(
-                        children: [
-                          Container(
-                            width: size.width,
-                            height: 60,
-                            decoration: BoxDecoration(
-                                color: Colors.black.withAlpha(50)),
-                          ),
-                          Container(
-                            width: size.width,
-                            margin: const EdgeInsets.all(5),
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                            height: 50,
-                            decoration:
-                                const BoxDecoration(color: Colors.black),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('TOTAL',
-                                    style: textTheme.headline5!
-                                        .copyWith(color: Colors.white)),
-                                Text('\$${state.cart.totalString}',
-                                    style: textTheme.headline5!
-                                        .copyWith(color: Colors.white)),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  )
+                  const OrderSummary(),
                 ],
               ),
             );
