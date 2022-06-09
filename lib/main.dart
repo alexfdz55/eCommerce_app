@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/blocs/blocs.dart';
+import 'package:ecommerce_app/repositories/repositories.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,17 +19,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider(create: (_) => WishlistBloc()..add(StartWishlist())),
-        BlocProvider(create: (_) => CartBloc()..add(CartStarted())),
+        // RepositoryProvider(create: (context) => CategoryRepository()),
+        RepositoryProvider(create: (context) => ProductRepository()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Material App',
-        theme: theme(),
-        onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: SplashScreen.routeName,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) =>
+                CategoryBloc(categoryRepository: CategoryRepository())
+                  ..add(LoadCategories()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                ProductBloc(productRepository: ProductRepository())
+                  ..add(LoadProducts()),
+          ),
+          BlocProvider(
+              create: (context) => WishlistBloc()..add(StartWishlist())),
+          BlocProvider(create: (context) => CartBloc()..add(CartStarted())),
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Material App',
+          theme: theme(),
+          onGenerateRoute: AppRouter.onGenerateRoute,
+          initialRoute: HomeScreen.routeName,
+        ),
       ),
     );
   }
