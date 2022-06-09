@@ -17,7 +17,7 @@ class CheckoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppbar(title: 'Checkout'),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(screen: routeName),
     );
   }
 }

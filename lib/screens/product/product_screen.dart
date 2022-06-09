@@ -27,57 +27,7 @@ class ProductScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppbar(title: product.name),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
-        child: SizedBox(
-          height: 70,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.share, color: Colors.white),
-                onPressed: () {},
-              ),
-              BlocBuilder<WishlistBloc, WishlistState>(
-                builder: (context, state) {
-                  // if (state is WishlistLoading) {
-                  //   return const CustomCircularProgress();
-                  // }
-                  // if (state is WishlistLoaded) {
-
-                  return IconButton(
-                      icon: const Icon(Icons.favorite, color: Colors.white),
-                      onPressed: () {
-                        BlocProvider.of<WishlistBloc>(context)
-                            .add(AddWishlistProduct(product: product));
-
-                        const snackBar = SnackBar(
-                          content: Text('Added to your WishList'),
-                        );
-
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      });
-
-                  // else {
-                  //   return const CustomErrorMessage();
-                  // }
-                },
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.white),
-                  child: Text(
-                    'ADD TO CART',
-                    style: textTheme.headline3,
-                  ),
-                  onPressed: () {
-                    BlocProvider.of<CartBloc>(context)
-                        .add(CartProductAdded(product));
-                    Navigator.pushNamed(context, '/cart');
-                  }),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: CustomNavBar(screen: routeName, product: product),
       body: ListView(
         children: [
           CarouselSlider(

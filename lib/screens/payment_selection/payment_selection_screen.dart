@@ -16,7 +16,7 @@ class PaymentSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppbar(title: 'Payment Selection'),
-      bottomNavigationBar: CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(screen: routeName),
     );
   }
 }

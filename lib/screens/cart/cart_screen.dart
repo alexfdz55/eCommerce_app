@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/blocs/blocs.dart';
-import 'package:ecommerce_app/models/models.dart';
 import 'package:ecommerce_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,25 +24,7 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: const CustomAppbar(title: 'Cart'),
-      bottomNavigationBar: SizedBox(
-        height: 70,
-        child: BottomAppBar(
-          color: Colors.black,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.white),
-                child: Text(
-                  'GO TO CHECKOUT',
-                  style: textTheme.headline3,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: const CustomNavBar(screen: routeName),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           if (state is CartLoading) {

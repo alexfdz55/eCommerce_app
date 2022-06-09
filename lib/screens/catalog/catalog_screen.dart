@@ -23,7 +23,7 @@ class CatalogScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: const CustomAppbar(title: 'Catalog'),
-      bottomNavigationBar: const CustomNavBar(),
+      bottomNavigationBar: const CustomNavBar(screen: routeName),
       body: GridView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
