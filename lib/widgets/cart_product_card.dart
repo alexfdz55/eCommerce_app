@@ -43,14 +43,25 @@ class CartProductCard extends StatelessWidget {
               return Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.remove_circle),
-                    onPressed: () => cartBloc.add(CartProductRemoved(product)),
-                  ),
+                      icon: const Icon(Icons.remove_circle),
+                      onPressed: () {
+                        const snackBar = SnackBar(
+                          content: Text('Removed to your Cart'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        cartBloc.add(CartProductRemoved(product));
+                      }),
                   Text('$quantity', style: textTheme.headline5),
                   IconButton(
-                    icon: const Icon(Icons.add_circle),
-                    onPressed: () => cartBloc.add(CartProductAdded(product)),
-                  ),
+                      icon: const Icon(Icons.add_circle),
+                      onPressed: () {
+                        const snackBar = SnackBar(
+                          content: Text('Added to your Cart'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                        cartBloc.add(CartProductAdded(product));
+                      }),
                 ],
               );
             },

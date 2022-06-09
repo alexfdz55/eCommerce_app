@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/blocs/blocs.dart';
 import 'package:ecommerce_app/models/models.dart';
 import 'package:ecommerce_app/screens/screens.dart';
+import 'package:ecommerce_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -120,16 +121,30 @@ class CustomNavBar extends StatelessWidget {
 
   List<Widget> _buildOrderNowNavBar(BuildContext context) {
     return [
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.white,
-          shape: const RoundedRectangleBorder(),
-        ),
-        child: Text(
-          'ORDER NOW',
-          style: Theme.of(context).textTheme.headline3,
-        ),
-        onPressed: () {},
+      BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (context, state) {
+          if (state is CheckoutLoading) {
+            return const CustomCircularProgress();
+          }
+          if (state is CheckoutLoaded) {
+            return ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                shape: const RoundedRectangleBorder(),
+              ),
+              child: Text(
+                'ORDER NOW',
+                style: Theme.of(context).textTheme.headline3,
+              ),
+              onPressed: () {
+                BlocProvider.of<CheckoutBloc>(context)
+                    .add(ConfirmCheckout(checkout: state.checkout));
+              },
+            );
+          } else {
+            return const CustomErrorMessage();
+          }
+        },
       ),
     ];
   }

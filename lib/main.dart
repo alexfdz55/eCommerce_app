@@ -26,26 +26,29 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (_) => CartBloc()..add(CartStarted())),
           BlocProvider(
-            create: (context) =>
+              create: (context) => CheckoutBloc(
+                    cartBloc: BlocProvider.of<CartBloc>(context),
+                    checkoutRepository: CheckoutRepository(),
+                  )),
+          BlocProvider(
+            create: (_) =>
                 CategoryBloc(categoryRepository: CategoryRepository())
                   ..add(LoadCategories()),
           ),
           BlocProvider(
-            create: (context) =>
-                ProductBloc(productRepository: ProductRepository())
-                  ..add(LoadProducts()),
+            create: (c_) => ProductBloc(productRepository: ProductRepository())
+              ..add(LoadProducts()),
           ),
-          BlocProvider(
-              create: (context) => WishlistBloc()..add(StartWishlist())),
-          BlocProvider(create: (context) => CartBloc()..add(CartStarted())),
+          BlocProvider(create: (_) => WishlistBloc()..add(StartWishlist())),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Material App',
           theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: CheckoutScreen.routeName,
+          initialRoute: HomeScreen.routeName,
         ),
       ),
     );
