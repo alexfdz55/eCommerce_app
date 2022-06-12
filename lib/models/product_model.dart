@@ -20,20 +20,22 @@ class Product extends Equatable {
   final bool isRecommended;
   @HiveField(6)
   final bool isPopular;
+  @HiveField(7)
+  final String? description;
 
-  const Product({
-    required this.id,
-    required this.name,
-    required this.category,
-    required this.imageUrl,
-    required this.price,
-    required this.isRecommended,
-    required this.isPopular,
-  });
+  const Product(
+      {required this.id,
+      required this.name,
+      required this.category,
+      required this.imageUrl,
+      required this.price,
+      required this.isRecommended,
+      required this.isPopular,
+      this.description});
 
   @override
   List<Object?> get props =>
-      [name, category, imageUrl, price, isRecommended, isPopular];
+      [name, category, imageUrl, price, isRecommended, isPopular, description];
 
   static Product fromSnapshot(DocumentSnapshot snap) {
     return Product(
@@ -44,7 +46,7 @@ class Product extends Equatable {
       price: snap['price'],
       isRecommended: snap['isRecommended'],
       isPopular: snap['isPopular'],
-      // description: snap['description'],
+      description: snap['description'],
     );
   }
 
