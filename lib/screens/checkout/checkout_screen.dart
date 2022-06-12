@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/blocs/blocs.dart';
+import 'package:ecommerce_app/screens/screens.dart';
 import 'package:ecommerce_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -85,10 +86,16 @@ class CheckoutScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Center(
-                              child: Text(
-                                'SELECT A PAYMENT METHOD',
-                                style: textTheme.headline3!
-                                    .copyWith(color: Colors.white),
+                              child: TextButton(
+                                child: Text(
+                                  'SELECT A PAYMENT METHOD',
+                                  style: textTheme.headline3!
+                                      .copyWith(color: Colors.white),
+                                ),
+                                onPressed: () => Navigator.pushNamed(
+                                  context,
+                                  PaymentSelectionScreen.routeName,
+                                ),
                               ),
                             ),
                             IconButton(

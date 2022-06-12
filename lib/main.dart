@@ -26,37 +26,32 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
+    return MultiBlocProvider(
       providers: [
-        // RepositoryProvider(create: (context) => CategoryRepository()),
-        RepositoryProvider(create: (context) => ProductRepository()),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (_) => CartBloc()..add(LoadCart())),
-          BlocProvider(
-              create: (context) => CheckoutBloc(
-                    cartBloc: BlocProvider.of<CartBloc>(context),
-                    checkoutRepository: CheckoutRepository(),
-                  )),
-          BlocProvider(
-            create: (_) =>
-                CategoryBloc(categoryRepository: CategoryRepository())
-                  ..add(LoadCategories()),
-          ),
-          BlocProvider(
-            create: (_) => ProductBloc(productRepository: ProductRepository())
-              ..add(LoadProducts()),
-          ),
-          BlocProvider(create: (_) => WishlistBloc()..add(LoadWishlist())),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Material App',
-          theme: theme(),
-          onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: HomeScreen.routeName,
+        BlocProvider(create: (_) => CartBloc()..add(LoadCart())),
+        BlocProvider(create: (_) => PaymentBloc()..add(LoadPaymentMethod())),
+        BlocProvider(
+            create: (context) => CheckoutBloc(
+                  cartBloc: BlocProvider.of<CartBloc>(context),
+                  checkoutRepository: CheckoutRepository(),
+                  paymentBloc: BlocProvider.of<PaymentBloc>(context),
+                )),
+        BlocProvider(
+          create: (_) => CategoryBloc(categoryRepository: CategoryRepository())
+            ..add(LoadCategories()),
         ),
+        BlocProvider(
+          create: (_) => ProductBloc(productRepository: ProductRepository())
+            ..add(LoadProducts()),
+        ),
+        BlocProvider(create: (_) => WishlistBloc()..add(LoadWishlist())),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Material App',
+        theme: theme(),
+        onGenerateRoute: AppRouter.onGenerateRoute,
+        initialRoute: HomeScreen.routeName,
       ),
     );
   }

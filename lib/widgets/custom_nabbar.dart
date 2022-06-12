@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ecommerce_app/blocs/blocs.dart';
 import 'package:ecommerce_app/models/models.dart';
 import 'package:ecommerce_app/screens/screens.dart';
@@ -37,6 +39,8 @@ class CustomNavBar extends StatelessWidget {
       case WishlistScreen.routeName:
         return _buildNavBar(context);
       case OrderConfirmationScreen.routeName:
+        return _buildNavBar(context);
+      case PaymentSelectionScreen.routeName:
         return _buildNavBar(context);
       case ProductScreen.routeName:
         return _buildAddToCartNavBar(context, product);
@@ -129,23 +133,71 @@ class CustomNavBar extends StatelessWidget {
             return const CustomCircularProgress();
           }
           if (state is CheckoutLoaded) {
-            return ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                shape: const RoundedRectangleBorder(),
-              ),
-              child: Text(
-                'ORDER NOW',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-              onPressed: () {
-                BlocProvider.of<CheckoutBloc>(context)
-                    .add(ConfirmCheckout(checkout: state.checkout));
-                Navigator.pushNamed(context, OrderConfirmationScreen.routeName);
-              },
-            );
+            if (Platform.isIOS) {
+              switch (state.paymentMethod) {
+                case PaymentMethod.applePay:
+                  return ApplePay(
+                    products: state.products!,
+                    total: state.total!,
+                  );
+                case PaymentMethod.creditCard:
+                  return Text(
+                    'Pay with Credit Card',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .copyWith(color: Colors.white),
+                  );
+
+                default:
+                  return ApplePay(
+                    products: state.products!,
+                    total: state.total!,
+                  );
+              }
+            }
+            if (Platform.isAndroid) {
+              switch (state.paymentMethod) {
+                case PaymentMethod.googlePay:
+                  return GooglePay(
+                    products: state.products!,
+                    total: state.total!,
+                  );
+                case PaymentMethod.creditCard:
+                  return Text(
+                    'Pay with Credit Card',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline4!
+                        .copyWith(color: Colors.white),
+                  );
+
+                default:
+                  return GooglePay(
+                    products: state.products!,
+                    total: state.total!,
+                  );
+              }
+            } else {
+              return ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  shape: const RoundedRectangleBorder(),
+                ),
+                child: Text(
+                  'CHOOSE PAYMENT',
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+                onPressed: () {
+                  BlocProvider.of<CheckoutBloc>(context)
+                      .add(ConfirmCheckout(checkout: state.checkout));
+                  Navigator.pushNamed(
+                      context, PaymentSelectionScreen.routeName);
+                },
+              );
+            }
           } else {
-            return const CustomErrorMessage();
+            return const Text('error', style: TextStyle(color: Colors.white));
           }
         },
       ),
