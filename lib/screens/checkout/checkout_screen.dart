@@ -40,13 +40,15 @@ class CheckoutScreen extends StatelessWidget {
                       Text('CUSTOMER INFORMATION', style: textTheme.headline3),
                       CustomTextFormField(
                         labelText: 'Email',
-                        onChanged: (value) =>
-                            checkoutBloc.add(UpdateCheckout(email: value)),
+                        onChanged: (value) => checkoutBloc.add(
+                          UpdateCheckout(email: value),
+                        ),
                       ),
                       CustomTextFormField(
                         labelText: ' Name',
-                        onChanged: (value) =>
-                            checkoutBloc.add(UpdateCheckout(fullName: value)),
+                        onChanged: (value) => checkoutBloc.add(
+                          UpdateCheckout(fullName: value),
+                        ),
                       ),
                       Text('DELIVERY INFORMATION', style: textTheme.headline3),
                       CustomTextFormField(
