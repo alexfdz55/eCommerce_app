@@ -101,7 +101,7 @@ class ProductCard extends StatelessWidget {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
                                   BlocProvider.of<CartBloc>(context).add(
-                                    CartProductAdded(product),
+                                    AddProduct(product),
                                   );
                                 }),
                           );

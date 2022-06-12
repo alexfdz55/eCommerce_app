@@ -7,11 +7,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'config/app_router.dart';
 import 'config/theme.dart';
 import '/screens/screens.dart';
+import 'simple_bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+
+  BlocOverrides.runZoned(
+    () {
+      runApp(const MyApp());
+    },
+    blocObserver: SimpleBlocObserver(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +33,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_) => CartBloc()..add(CartStarted())),
+          BlocProvider(create: (_) => CartBloc()..add(LoadCart())),
           BlocProvider(
               create: (context) => CheckoutBloc(
                     cartBloc: BlocProvider.of<CartBloc>(context),
@@ -38,10 +45,10 @@ class MyApp extends StatelessWidget {
                   ..add(LoadCategories()),
           ),
           BlocProvider(
-            create: (c_) => ProductBloc(productRepository: ProductRepository())
+            create: (_) => ProductBloc(productRepository: ProductRepository())
               ..add(LoadProducts()),
           ),
-          BlocProvider(create: (_) => WishlistBloc()..add(StartWishlist())),
+          BlocProvider(create: (_) => WishlistBloc()..add(LoadWishlist())),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

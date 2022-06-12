@@ -49,7 +49,7 @@ class CartProductCard extends StatelessWidget {
                           content: Text('Removed to your Cart'),
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        cartBloc.add(CartProductRemoved(product));
+                        cartBloc.add(RemoveProduct(product));
                       }),
                   Text('$quantity', style: textTheme.headline5),
                   IconButton(
@@ -60,7 +60,7 @@ class CartProductCard extends StatelessWidget {
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-                        cartBloc.add(CartProductAdded(product));
+                        cartBloc.add(AddProduct(product));
                       }),
                 ],
               );

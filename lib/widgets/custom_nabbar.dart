@@ -80,7 +80,7 @@ class CustomNavBar extends StatelessWidget {
               icon: const Icon(Icons.favorite, color: Colors.white),
               onPressed: () {
                 BlocProvider.of<WishlistBloc>(context)
-                    .add(AddWishlistProduct(product: product!));
+                    .add(AddProductToWishlist(product: product!));
 
                 const snackBar = SnackBar(
                   content: Text('Added to your WishList'),
@@ -97,7 +97,7 @@ class CustomNavBar extends StatelessWidget {
             style: textTheme.headline3,
           ),
           onPressed: () {
-            BlocProvider.of<CartBloc>(context).add(CartProductAdded(product!));
+            BlocProvider.of<CartBloc>(context).add(AddProduct(product!));
             Navigator.pushNamed(context, CartScreen.routeName);
           }),
     ];
