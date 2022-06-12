@@ -38,42 +38,40 @@ class CheckoutScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('CUSTOMER INFORMATION', style: textTheme.headline3),
-                      _buildTextFormField(
-                        context,
-                        'Email',
-                        (value) =>
+                      CustomTextFormField(
+                        labelText: 'Email',
+                        onChanged: (value) =>
                             checkoutBloc.add(UpdateCheckout(email: value)),
                       ),
-                      _buildTextFormField(
-                        context,
-                        ' Name',
-                        (value) =>
+                      CustomTextFormField(
+                        labelText: ' Name',
+                        onChanged: (value) =>
                             checkoutBloc.add(UpdateCheckout(fullName: value)),
                       ),
                       Text('DELIVERY INFORMATION', style: textTheme.headline3),
-                      _buildTextFormField(
-                        context,
-                        'Address',
-                        (value) =>
-                            checkoutBloc.add(UpdateCheckout(address: value)),
+                      CustomTextFormField(
+                        labelText: 'Address',
+                        onChanged: (value) => checkoutBloc.add(
+                          UpdateCheckout(address: value),
+                        ),
                       ),
-                      _buildTextFormField(
-                        context,
-                        'City',
-                        (value) =>
-                            checkoutBloc.add(UpdateCheckout(city: value)),
+                      CustomTextFormField(
+                        labelText: 'City',
+                        onChanged: (value) => checkoutBloc.add(
+                          UpdateCheckout(city: value),
+                        ),
                       ),
-                      _buildTextFormField(
-                        context,
-                        'Country',
-                        (value) =>
-                            checkoutBloc.add(UpdateCheckout(country: value)),
+                      CustomTextFormField(
+                        labelText: 'Country',
+                        onChanged: (value) => checkoutBloc.add(
+                          UpdateCheckout(country: value),
+                        ),
                       ),
-                      _buildTextFormField(
-                        context,
-                        'Zip Code',
-                        (value) =>
-                            checkoutBloc.add(UpdateCheckout(zipCode: value)),
+                      CustomTextFormField(
+                        labelText: 'Zip Code',
+                        onChanged: (value) => checkoutBloc.add(
+                          UpdateCheckout(zipCode: value),
+                        ),
                       ),
                       Text('ORDER SUMMARY', style: textTheme.headline3),
                       const SizedBox(height: 20),
@@ -112,41 +110,11 @@ class CheckoutScreen extends StatelessWidget {
                     ],
                   );
                 } else {
-                  print(state);
                   return const CustomErrorMessage();
                 }
               },
             ),
           )),
-    );
-  }
-
-  Widget _buildTextFormField(
-    BuildContext context,
-    String labelText,
-    Function(String)? onChanged,
-  ) {
-    final textTheme = Theme.of(context).textTheme;
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          SizedBox(
-              width: 75, child: Text(labelText, style: textTheme.bodyText1)),
-          Expanded(
-            child: TextFormField(
-              decoration: const InputDecoration(
-                isDense: true,
-                contentPadding: EdgeInsets.only(left: 10),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black)),
-              ),
-              onChanged: onChanged,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
