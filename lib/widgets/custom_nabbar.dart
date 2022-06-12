@@ -36,6 +36,8 @@ class CustomNavBar extends StatelessWidget {
         return _buildNavBar(context);
       case WishlistScreen.routeName:
         return _buildNavBar(context);
+      case OrderConfirmationScreen.routeName:
+        return _buildNavBar(context);
       case ProductScreen.routeName:
         return _buildAddToCartNavBar(context, product);
       case CartScreen.routeName:
@@ -139,6 +141,7 @@ class CustomNavBar extends StatelessWidget {
               onPressed: () {
                 BlocProvider.of<CheckoutBloc>(context)
                     .add(ConfirmCheckout(checkout: state.checkout));
+                Navigator.pushNamed(context, OrderConfirmationScreen.routeName);
               },
             );
           } else {
